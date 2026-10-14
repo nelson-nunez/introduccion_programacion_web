@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Académico Interactivo</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Perfil Académico Interactivo</h1>
+    </header>
+
+    <main>
+        <section aria-labelledby="tituloRegistro">
+            <h2 id="tituloRegistro">Mis datos</h2>
+
+            <form id="formRegistro" novalidate>
+                <!-- Datos personales -->
+                <fieldset class="tarjeta">
+                    <legend>Datos personales</legend>
+                    <div>
+                        <label for="txtApellido">Apellido</label>
+                        <input id="txtApellido" type="text" class="onlyLetters" autocomplete="family-name"
+                               maxlength="50" required aria-describedby="err-txtApellido">
+                        <span id="err-txtApellido" role="alert"></span>
+                    </div>
+                    <div>
+                        <label for="txtNombre">Nombre</label>
+                        <input id="txtNombre" type="text" class="onlyLetters" autocomplete="given-name"
+                               maxlength="50" required aria-describedby="err-txtNombre">
+                        <span id="err-txtNombre" role="alert"></span>
+                    </div>
+                    <div>
+                        <label for="txtFechaNacimiento">Fecha de nacimiento</label>
+                        <input id="txtFechaNacimiento" type="date" autocomplete="bday"
+                               required aria-describedby="err-txtFechaNacimiento">
+                        <span id="err-txtFechaNacimiento" role="alert"></span>
+                    </div>
+                    <div>
+                        <label for="txtDni">DNI</label>
+                        <input id="txtDni" type="text" class="onlyIntegerNumber" inputmode="numeric"
+                               autocomplete="off" maxlength="8" placeholder="12345678" required
+                               aria-describedby="err-txtDni">
+                        <span id="err-txtDni" role="alert"></span>
+                    </div>
+
+                    <div>
+                        <label for="txtLugarNacimiento">Ciudad o localidad</label>
+                        <input id="txtLugarNacimiento" type="text" class="onlyLetters"
+                               autocomplete="off" maxlength="60" required
+                               aria-describedby="err-txtLugarNacimiento">
+                        <span id="err-txtLugarNacimiento" role="alert"></span>
+                    </div>
+                    <div>
+                        <label for="selProvincia">Provincia</label>
+                        <select id="selProvincia" required aria-describedby="err-selProvincia"></select>
+                        <span id="err-selProvincia" role="alert"></span>
+                    </div>
+                    <div>
+                        <label for="txtPrimaria">Escuela primaria</label>
+                        <input id="txtPrimaria" type="text" maxlength="80" autocomplete="off"
+                               required aria-describedby="err-txtPrimaria">
+                        <span id="err-txtPrimaria" role="alert"></span>
+                    </div>
+                    <div>
+                        <label for="txtSecundaria">Escuela secundaria</label>
+                        <input id="txtSecundaria" type="text" maxlength="80" autocomplete="off"
+                               required aria-describedby="err-txtSecundaria">
+                        <span id="err-txtSecundaria" role="alert"></span>
+                    </div>
+                    <div>
+                        <label for="txtCarrera">Carrera actual</label>
+                        <input id="txtCarrera" type="text" maxlength="80" autocomplete="off"
+                               required aria-describedby="err-txtCarrera">
+                        <span id="err-txtCarrera" role="alert"></span>
+                    </div>
+                </fieldset>
+
+                <!-- Materias -->
+                <fieldset class="tarjeta materias">
+                    <legend>Asignaturas aprobadas (mínimo 5)</legend>
+
+                    <!-- Mini form -->
+                    <div role="group" aria-label="Cargar una asignatura">
+                        <div>
+                            <label for="txtMateria">Nombre de la asignatura</label>
+                            <input id="txtMateria" type="text" maxlength="80" autocomplete="off"
+                                   required aria-describedby="err-txtMateria">
+                            <span id="err-txtMateria" role="alert"></span>
+                        </div>
+                        <div>
+                            <label for="txtAnio">Año de aprobación</label>
+                            <input id="txtAnio" type="text" class="onlyIntegerNumber" inputmode="numeric" maxlength="4"
+                                   autocomplete="off" placeholder="2026" required
+                                   aria-describedby="err-txtAnio">
+                            <span id="err-txtAnio" role="alert"></span>
+                        </div>
+                        <div>
+                            <label for="txtNota">Nota obtenida</label>
+                            <input id="txtNota" type="text" class="onlyNumber" inputmode="decimal" maxlength="5"
+                                   autocomplete="off" placeholder="8" required
+                                   aria-describedby="err-txtNota">
+                            <span id="err-txtNota" role="alert"></span>
+                        </div>
+                        <button type="button" id="btnAgregarMateria">Agregar asignatura</button>
+                    </div>
+
+                    <!-- Grilla de materias -->
+                    <div>
+                        <table id="tablaMaterias">
+                            <caption>Asignaturas cargadas</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Año de aprobación</th>
+                                    <th scope="col">Nota obtenida</th>
+                                    <th scope="col" aria-label="Acciones"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyMaterias" aria-live="polite"></tbody>
+                        </table>
+                        <span id="err-materias" role="alert"></span>
+                    </div>
+                </fieldset>
+
+                <div class="acciones">
+                    <button type="submit">Generar perfil</button>
+                    <button type="button" id="btnCalcularEstadisticas">Calcular estadísticas</button>
+                    <button type="button" id="btnGuardar">Guardar perfil</button>
+                    <button type="button" id="btnCargar">Cargar perfil</button>
+                    <button type="button" id="btnCambiarVisualizacion" class="secundario">Cambiar visualización</button>
+                    <button type="button" id="btnLimpiar" class="secundario">Limpiar</button>
+                    <button type="button" id="btnEliminar" class="peligro">Eliminar datos</button>
+                </div>
+
+                <p id="mensajeEstado" role="status"></p>
+            </form>
+        </section>
+
+        <!-- Perfil agenerado -->
+        <section id="seccionPerfil" class="tarjeta" aria-labelledby="tituloPerfil" hidden>
+            <h2 id="tituloPerfil">Perfil académico</h2>
+
+            <dl class="datos">
+                <div><dt>Nombre y apellido</dt><dd data-campo="nombreApellido"></dd></div>
+                <div><dt>DNI</dt><dd data-campo="dni"></dd></div>
+                <div><dt>Fecha de nacimiento</dt><dd data-campo="fechaNacimiento"></dd></div>
+                <div><dt>Lugar de nacimiento</dt><dd data-campo="lugarNacimiento"></dd></div>
+                <div><dt>Escuela primaria</dt><dd data-campo="escuelaPrimaria"></dd></div>
+                <div><dt>Escuela secundaria</dt><dd data-campo="escuelaSecundaria"></dd></div>
+                <div><dt>Carrera actual</dt><dd data-campo="carrera"></dd></div>
+                <div><dt>Código personal</dt><dd data-campo="codigoPersonal"></dd></div>
+            </dl>
+
+            <div id="seccionCalculos">
+                <h3>Calculos personales</h3>
+                <dl class="datos">
+                    <div><dt>Último dígito del DNI</dt><dd data-campo="ultimoDigito"></dd></div>
+                    <div><dt>Suma de dígitos del DNI</dt><dd data-campo="sumaDni"></dd></div>
+                    <div><dt>Número personal</dt><dd data-campo="numeroPersonal"></dd></div>
+                    <div><dt>Iniciales</dt><dd data-campo="iniciales"></dd></div>
+                    <div><dt>Letras (nombre y apellido)</dt><dd data-campo="totalLetras"></dd></div>
+                    <div><dt>Vocales</dt><dd data-campo="vocales"></dd></div>
+                    <div><dt>Consonantes</dt><dd data-campo="consonantes"></dd></div>
+                    <div><dt>Año de nacimiento</dt><dd data-campo="anioNacimiento"></dd></div>
+                    <div><dt>Edad aproximada</dt><dd data-campo="edadAproximada"></dd></div>
+                </dl>
+            </div>
+        </section>
+
+        <!-- Estadistics asignaturas -->
+        <section id="seccionEstadisticas" class="tarjeta" aria-labelledby="tituloEstadisticas" hidden>
+            <h2 id="tituloEstadisticas">Estadísticas académicas</h2>
+            <dl class="datos">
+                <div><dt>Asignaturas aprobadas</dt><dd data-campo="cantidad"></dd></div>
+                <div><dt>Promedio general</dt><dd data-campo="promedio"></dd></div>
+                <div><dt>Nota máxima</dt><dd data-campo="notaMaxima"></dd></div>
+                <div><dt>Nota mínima</dt><dd data-campo="notaMinima"></dd></div>
+                <div><dt>Clasificación</dt><dd data-campo="clasificacion"></dd></div>
+            </dl>
+        </section>
+    </main>
+
+    <footer>
+        <p>Universidad Abierta Interamericana</p>
+        <p>Materia: Introducción a la Programación Web</p>
+        <p>Alumno/Autor: Nuñez Nelson</p>
+    </footer>
+</body>
+</html>
